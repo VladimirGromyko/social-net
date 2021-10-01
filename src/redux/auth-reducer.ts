@@ -41,11 +41,11 @@ const authReducer = (state: UserDataType = initialState, action: ActionsTypes): 
 
 //export const setUsersData = (userId: number | null, email: string | null, login: string | null, isFetching: boolean): SetUserDataActionType => (
 export const setAuthUsersData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean):
-//export const setAuthUsersData = (data:UserDataType):
     SetUserDataActionType => ({type: SET_USER_DATA, data: {userId, email, login, isAuth}})  //, isFetching
+//export const setAuthUsersData = (data:UserDataType):
 //SetUserDataActionType => ({type: SET_USER_DATA, data})  //, isFetching
 //export const toggleIsFetching = (isFetching:boolean): ToggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching})
-export const getAuthUsersData = () => (dispatch:DispatchType) => {
+export const getAuthUsersData = () => (dispatch: DispatchType) => {
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {

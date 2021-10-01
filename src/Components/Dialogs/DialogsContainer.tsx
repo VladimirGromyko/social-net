@@ -3,6 +3,8 @@ import {ActionsTypes, RootStateType, SubscribeType} from "../../redux/store";
 import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
+import {UserDataType} from "../../redux/auth-reducer";
+import {AppStoreType} from "../../redux/redux-store";
 
 
 type StoreType = {
@@ -33,9 +35,10 @@ type StoreOfType = {
 //     )
 // }
 
-let mapStateToProps =(state: RootStateType) => {
+let mapStateToProps =(state: AppStoreType) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps =(dispatch: (action: ActionsTypes) => void) => {
