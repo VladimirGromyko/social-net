@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import s from './Dialogs.module.css'
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-
-
-export type DialogsElementType = {
-    id: string
-    name: string
-}
-export type MessagesElementType = {
-    id: string
-    message: string
-}
-type DialogsAndMessagesType = {
-    dialogs : Array <DialogsElementType>
-    messages: Array <MessagesElementType>
-}
-type stateType = {
-    state: DialogsAndMessagesType
-}
-
-const Dialogs:React.FC<stateType> = (props) => {
-    let dialogsElements = props.state.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id}/>)
-
-    let messagesElements = props.state.messages
-        .map(m => <Message message={m.message}/>)
-=======
 import React, {ChangeEvent} from "react";
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
@@ -59,16 +29,12 @@ const Dialogs: React.FC<DialogsAndMessagesType> = (props) => {
         props.updateNewMessageBody(body)
     }
 
->>>>>>> 5af59c8 (09-09-2021 commit - with usersAPI)
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
                 {dialogsElements}
             </div>
             <div className={s.messages}>
-<<<<<<< HEAD
-                {messagesElements}
-=======
                 <div>{messagesElements}</div>
                 <div>
                     <div>
@@ -80,7 +46,6 @@ const Dialogs: React.FC<DialogsAndMessagesType> = (props) => {
                         <button onClick={onSendMessageClick}>Send</button>
                     </div>
                 </div>
->>>>>>> 5af59c8 (09-09-2021 commit - with usersAPI)
             </div>
         </div>
     )
