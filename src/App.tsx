@@ -1,36 +1,47 @@
 import React from 'react';
 import './App.css';
-import Header from "./Components/Header/header";
 import Navbar from "./Components/Navbar/Navbar";
-import Profile from "./Components/Profile/Profile";
-import Dialogs from "./Components/Dialogs/Dialogs";
 import {Route} from 'react-router-dom';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
-import {RootStateType} from "./redux/state";
+import {ActionsTypes, RootStateType, SubscribeType} from "./redux/store";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
+import ProfileContainer from "./Components/Profile/ProfileContainer";
+import HeaderContainer from "./Components/Header/headerContainer";
 
-type stateType = {
-    state:RootStateType
-    addPost : () => void
-    updateNewPostText: (newText: string) => void
+
+type StoreType = {
+    _state: RootStateType
+    _callSubscriber: () => void
+    getState: () => RootStateType
+    subscribe: SubscribeType
+    dispatch: (action: ActionsTypes) => void
 }
-const App = (props: stateType) => {
+export type StoreOfType = {
+    store: StoreType
+}
+
+// const App = (props: StoreOfType) => {
+const App = () => {
     return (
-        // eslint-disable-next-line react/jsx-no-undef
         <div className="app-wrapper">
-            <Header/>
+            <HeaderContainer />
             <Navbar/>
             <div className='app-wrapper-content'>
 
-                {/* eslint-disable-next-line react/jsx-no-undef */}
-                <Route path='/dialogs' render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage}
-                                                              addPost={props.addPost}
-                                                              updateNewPostText={props.updateNewPostText}/>}/>
-                <Route path='/news' render={() => <News/>}/>
-                <Route path='/music' render={() => <Music/>}/>
-                <Route path='/settings' render={() => <Settings/>}/>
+                <Route path='/dialogs' render={() => <DialogsContainer />}/>
+                {/*<DialogsContainer store={props.store}/>}/>*/}
+                <Route path='/profile/:userId?'
+                       render={() => <ProfileContainer />}/>
+                {/*<Route path='/profile' render={() => <ProfileContainer />}/>*/}
+
+                {/*<Profile store={props.store}/>}/>*/}
+                <Route path='/users' render={() => <UsersContainer />}/>
+                <Route path='/news' render={() => <News />}/>
+                <Route path='/music' render={() => <Music />}/>
+                <Route path='/settings' render={() => <Settings />}/>
             </div>
         </div>
     )

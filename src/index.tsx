@@ -1,4 +1,5 @@
 import './index.css';
+<<<<<<< HEAD
 //import reportWebVitals from './reportWebVitals';
 //import state, {subscribe} from "./redux/state";
 import store from "./redux/state";
@@ -25,6 +26,37 @@ rerenderEntireTree()
 
 
 store.subscribe(rerenderEntireTree)
+=======
+import store from "./redux/redux-store";
+import ReactDOM from "react-dom";
+import {BrowserRouter} from "react-router-dom";
+import App from "./App";
+import React from "react";
+import {Provider} from "react-redux";
+
+
+//let rerenderEntireTree = (state: RootStateType) => {
+// let rerenderEntireTree = () => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <Provider store = {store}>
+                <App />
+            </Provider>
+        </BrowserRouter>,
+        document.getElementById('root'));
+// }
+/*  </React.StrictMode>*/
+
+//rerenderEntireTree(store.getState())
+// rerenderEntireTree()
+//
+//
+// store.subscribe(() => {
+//     //let state = store.getState()
+//     rerenderEntireTree()
+//     //rerenderEntireTree(state)
+// })
+>>>>>>> 5af59c8 (09-09-2021 commit - with usersAPI)
 
 
 // If you want to start measuring performance in your app, pass a function

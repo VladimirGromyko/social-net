@@ -6,3 +6,12 @@
 .header img {
     width: 125px;
 }
+<<<<<<< HEAD
+=======
+.loginBlock{
+    float: right;
+}
+.loginBlock a {
+    color: white;
+}
+>>>>>>> 5af59c8 (09-09-2021 commit - with usersAPI)
