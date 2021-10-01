@@ -6,7 +6,7 @@ import {DialogsPageType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 
 
-type DialogsAndMessagesType = {
+export type DialogsAndMessagesType = {
     dialogsPage: DialogsPageType
     updateNewMessageBody: (body: string) => void
     sendMessage: () => void
@@ -30,7 +30,7 @@ const Dialogs: React.FC<DialogsAndMessagesType> = (props) => {
         let body = e.currentTarget.value
         props.updateNewMessageBody(body)
     }
-    if (!props.isAuth) return <Redirect to= '/login' />
+    //if (!props.isAuth) return <Redirect to= '/login' />
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
