@@ -1,7 +1,6 @@
-import {ActionsTypes, RootStateType, StoreType} from "./store";
+import {ActionsTypes} from "./store";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
 import {usersAPI} from "../api/api";
-import {ThunkAction} from "redux-thunk";
 import {Dispatch} from "redux";
 
 type FollowType = {
@@ -72,7 +71,7 @@ let initialState = {
         //     location: {city: 'Moscow', country: 'Russia'}
         // },
     ],
-    pageSize: 70,
+    pageSize: 15,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
@@ -123,7 +122,7 @@ const usersReducer = (state: UsersType = initialState, action: ActionsTypes) => 
                 followingInProgress:
                     action.isFetchingForFollowing
                         ? [...state.followingInProgress, action.userId]
-                        : state.followingInProgress.filter(id => id != action.userId),
+                        : state.followingInProgress.filter(id => id !== action.userId),
                 //userId: action.userId
             }
         }

@@ -12,6 +12,8 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 //import {usersAPI} from "../../api/api";
 
 type locationType = {
@@ -129,12 +131,19 @@ let mapStateToProps = (state: RootStateType) => {
 //         }
 //     }
 // }
-export default connect(mapStateToProps,
-    {
-        follow, unfollow,
-        //setUsers, setCurrentPage,
-        //setTotalUsersCount, toggleIsFetching,
-        toggleFollowingProgress, getUsers
-    })(UsersContainer)
+
+// export default connect(mapStateToProps,
+//     {
+//         follow, unfollow,
+//         //setUsers, setCurrentPage,
+//         //setTotalUsersCount, toggleIsFetching,
+//         toggleFollowingProgress, getUsers
+//     })(UsersContainer)
 
 //export default connect(mapStateToProps,mapDispatchToProps)(UsersContainer)
+
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {follow, unfollow, toggleFollowingProgress, getUsers}),
+    withAuthRedirect
+)(UsersContainer)

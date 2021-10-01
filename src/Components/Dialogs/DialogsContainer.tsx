@@ -7,6 +7,7 @@ import {UserDataType} from "../../redux/auth-reducer";
 import {AppStoreType} from "../../redux/redux-store";
 import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 type StoreType = {
@@ -56,12 +57,18 @@ let mapDispatchToProps =(dispatch: (action: ActionsTypes) => void) => {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(Dialogs)
-// let AuthRedirectComponent = (props: DialogsAndMessagesType) => {
-//     if (!props.isAuth) return <Redirect to= '/login' />
-//     return <Dialogs { ... props}/>
-// }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
+// let AuthRedirectComponent = withAuthRedirect(Dialogs)
+// // let AuthRedirectComponent = (props: DialogsAndMessagesType) => {
+// //     if (!props.isAuth) return <Redirect to= '/login' />
+// //     return <Dialogs { ... props}/>
+// // }
+//
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
+//
+// export default DialogsContainer
 
-export default DialogsContainer
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs)
