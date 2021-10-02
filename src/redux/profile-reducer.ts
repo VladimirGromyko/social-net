@@ -119,7 +119,7 @@ export const getUserProfile = (userId: string) => (dispatch:DispatchType) => {
 })
 }
 
-export const getUserStatus = (userId: string) => (dispatch:DispatchType) => {
+export const getStatus = (userId: string) => (dispatch:DispatchType) => {
     profileAPI.getStatus(userId)
         .then(response => {
             dispatch(setStatus(response.data))
