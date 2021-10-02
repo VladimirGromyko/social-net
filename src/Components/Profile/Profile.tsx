@@ -17,6 +17,8 @@ type StoreOfType = {
 }
 type ProfilePropsType = {
     profile: ProfileType
+    status: string
+    updateStatus: (status: string) => void
 }
 
 /*const Profile = (props: StoreOfType) => {*/
@@ -24,7 +26,7 @@ const Profile = (props: ProfilePropsType) => {
 
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
             {/*    <MyPostsContainer store={props.store}/>*/}
             <MyPostsContainer/>
         </div>

@@ -104,6 +104,10 @@ type SetUserProfileActionType = {
     type: "SET-USER-PROFILE",
     profile: any
 }
+export type SetStatusActionType = {
+    type: "SET_STATUS",
+    status: string
+}
 export type SetUserDataActionType = {
     type: "SET_USER_DATA",
     data: UserDataType
@@ -121,7 +125,8 @@ export type ActionsTypes = AddPostActionType |
     ToggleIsFetchingType |
     ToggleIsFollowingInProgressType |
     SetUserProfileActionType |
-    SetUserDataActionType
+    SetUserDataActionType |
+    SetStatusActionType
 
 
 export type StoreType = {
@@ -166,7 +171,8 @@ let store: StoreType = {
                     "small": "",
                     "large": ""
                 }
-            }
+            },
+            status: "-"
         },
         dialogsPage: {
             dialogs: [
