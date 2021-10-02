@@ -42,8 +42,6 @@ export type ProfileType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
-    newMessageBody: string
-
 }
 
 export type SidebarType = {}
@@ -58,6 +56,7 @@ export type RootStateType = {
 }
 type AddPostActionType = {
     type: "ADD-POST"
+    newPostText: string
 }
 type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT",
@@ -67,8 +66,9 @@ type UpdateNewMessageBodyType = {
     type: "UPDATE-NEW-MESSAGE-BODY",
     body: string
 }
-type SendMessageType = {
+export type SendMessageType = {
     type: "SEND-MESSAGE"
+    newMessageBody: string
 }
 type FollowType = {
     type: "FOLLOW",
@@ -150,7 +150,7 @@ let store: StoreType = {
                 {id: 2, message: "Hi, what are you doing?", likesCount: 5},
                 {id: 3, message: "It's my first post.", likesCount: 4},
             ],
-            newPostText: 'YoYoYo',
+            //newPostText: 'YoYoYo',
             profile: {
                 "aboutMe": "",
                 "contacts": {
@@ -185,8 +185,7 @@ let store: StoreType = {
                 {id: "1", message: "Hi"},
                 {id: "2", message: "How are you?"},
                 {id: "3", message: "Yo"},
-            ],
-            newMessageBody: ""
+            ]
         },
         sidebar: {},
         usersPage: {

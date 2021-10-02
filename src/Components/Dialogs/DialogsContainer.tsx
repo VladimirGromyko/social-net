@@ -1,6 +1,6 @@
 import React from "react";
-import {ActionsTypes, RootStateType, SubscribeType} from "../../redux/store";
-import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer";
+import {ActionsTypes, RootStateType, SendMessageType, SubscribeType} from "../../redux/store";
+import {sendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs, {DialogsAndMessagesType} from "./Dialogs";
 import { connect } from "react-redux";
 import {UserDataType} from "../../redux/auth-reducer";
@@ -46,13 +46,13 @@ let mapStateToProps =(state: AppStoreType) => {
 }
 let mapDispatchToProps =(dispatch: (action: ActionsTypes) => void) => {
     return {
-        updateNewMessageBody: (body:string) => {
-            let action = updateNewMessageBodyAC(body)
-            dispatch(action)
-
-        },
-        sendMessage: () => {
-            dispatch(sendMessageAC())
+        // updateNewMessageBody: (body:string) => {
+        //     let action = updateNewMessageBodyAC(body)
+        //     dispatch(action)
+        //
+        // },
+        sendMessage: (newMessageBody: string)=> {
+            dispatch(sendMessageAC(newMessageBody))
         }
     }
 }
