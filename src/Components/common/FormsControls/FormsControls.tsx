@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './FormsControls.module.css'
+import style from './FormsControls.module.css'
 import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form/lib/Field";
 
 // TYPES video 08 - Redux-Form + TypeScript + Generic или как решать проблемы / React JS - Путь Самурая 2.0
@@ -17,7 +17,7 @@ export const FormControl:
                                         }) => {
     const hasError = touched && error
     return (
-        <div className={styles.formControl + " " + (hasError ? styles.error : "")}>
+        <div className={style.formControl + " " + (hasError ? style.error : "")}>
             <div>
                 {children}
                 {/*                <textarea {...input} {...props}/>*/}

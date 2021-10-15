@@ -4,6 +4,7 @@ import sidebarReducer from "./sidebar-reducer";
 import {UsersType} from "./users-reducer";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
 import { UserDataType } from "./auth-reducer";
+import {FormAction} from "redux-form/lib/actions";
 
 
 type DialogsType = {
@@ -110,7 +111,7 @@ export type SetStatusActionType = {
 }
 export type SetUserDataActionType = {
     type: "SET_USER_DATA",
-    data: UserDataType
+    payload: UserDataType
 }
 
 export type ActionsTypes = AddPostActionType |

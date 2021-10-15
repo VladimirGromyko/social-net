@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from "./header";
 import {connect} from "react-redux";
-import {getAuthUsersData} from "../../redux/auth-reducer";
+import {getAuthUsersData, logout} from "../../redux/auth-reducer";
 import {AppStoreType} from "../../redux/redux-store";
+import {log} from "util";
 
 
 type MapStatePropsType = {
@@ -12,6 +13,7 @@ type MapStatePropsType = {
 
 export type HeaderContainerPropsType = {
     login: string | null
+    logout: () => void
     isAuth: boolean,
     //setAuthUsersData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => void
     getAuthUsersData: () => void
@@ -41,4 +43,4 @@ const mapStateToProps = (state: AppStoreType): MapStatePropsType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login
 })
-export default connect(mapStateToProps, {getAuthUsersData})(HeaderContainer);
+export default connect(mapStateToProps, {getAuthUsersData, logout})(HeaderContainer);
