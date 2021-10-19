@@ -22,16 +22,16 @@ import {compose} from "redux";
 type PathParamType = {
     userId: string
 }
-
 type MapStatePropsType = {
     profile: ProfileType,
-    status: string
-    //isAuth: boolean
+    status: string,
+    authorizedUserId: string | null
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
 
-    getUserProfile: (userId: string) => void
-    getStatus: (userId: string) => void
+    getUserProfile: (userId: string | null) => void
+    getStatus: (userId: string | null) => void
     updateStatus: (status: string) => void
     //getUserProfile: (profile: ProfileType) => void
 }
@@ -40,10 +40,13 @@ type PropsType = RouteComponentProps<PathParamType> & ProfileContainerPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId
+         let userId: string|null = this.props.match.params.userId
+        //let userId = this.props.userId
+
         if (!userId) {
             // userId = "1049"
-            userId = "17281"
+            //   userId = "17281"
+            userId = this.props.authorizedUserId
         }
 
         this.props.getUserProfile(userId);
@@ -70,8 +73,9 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: AppStoreType): MapStatePropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
-    //isAuth: state.auth.isAuth
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
     //A: 4
 })
 export default compose<React.ComponentType>(

@@ -9,7 +9,7 @@ import {FormAction} from "redux-form/lib/actions";
 
 
 export type UserDataType = {
-    userId: number | null,
+    userId: string | null,
     email: string | null,
     login: string | null,
     isAuth: boolean
@@ -47,7 +47,7 @@ const authReducer = (state: UserDataType = initialState, action: ActionsTypes): 
 }
 
 //export const setUsersData = (userId: number | null, email: string | null, login: string | null, isFetching: boolean): SetUserDataActionType => (
-export const setAuthUsersData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean):
+export const setAuthUsersData = (userId: string | null, email: string | null, login: string | null, isAuth: boolean):
     SetUserDataActionType => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}})  //, isFetching
 //export const setAuthUsersData = (data:UserDataType):
 //SetUserDataActionType => ({type: SET_USER_DATA, data})  //, isFetching
@@ -68,11 +68,10 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthUsersData())
+                } else {
+                    let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+                    dispatch(stopSubmit('login', {_error: message}))
                 }
-                // else {
-                //     let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
-                //     dispatch(stopSubmit('login', {_error: message}))
-                // }
             })
     };
 
