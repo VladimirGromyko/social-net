@@ -53,7 +53,7 @@ export const setAuthUsersData = (userId: string | null, email: string | null, lo
 //SetUserDataActionType => ({type: SET_USER_DATA, data})  //, isFetching
 //export const toggleIsFetching = (isFetching:boolean): ToggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching})
 export const getAuthUsersData = (): ThunkType => (dispatch) => {
-    authAPI.me()
+    return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, email, login} = response.data.data
@@ -85,5 +85,3 @@ export const logout = (): ThunkType => (dispatch) => {
 }
 
 export default authReducer
-
-// Video 79 Time: 19.00

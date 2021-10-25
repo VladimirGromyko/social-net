@@ -2,8 +2,6 @@ import React from "react";
 import style from './FormsControls.module.css'
 import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form/lib/Field";
 
-// TYPES video 08 - Redux-Form + TypeScript + Generic или как решать проблемы / React JS - Путь Самурая 2.0
-// time: 54 +/-
 type FormsControlsPropsType = {
     meta: WrappedFieldMetaProps
 }

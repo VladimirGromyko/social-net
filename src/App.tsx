@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
 import {Route} from 'react-router-dom';
@@ -11,42 +11,61 @@ import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/headerContainer";
 import LoginPage from "./Components/Login/Login";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
+import {compose} from "redux";
+import {AppStoreType} from "./redux/redux-store";
+import Preloader from "./Components/common/Preloader/Preloader";
+import {initializeApp} from "./redux/app-reducer";
 
 
-type StoreType = {
-    _state: RootStateType
-    _callSubscriber: () => void
-    getState: () => RootStateType
-    subscribe: SubscribeType
-    dispatch: (action: ActionsTypes) => void
+// type StoreType = {
+//     _state: RootStateType
+//     _callSubscriber: () => void
+//     getState: () => RootStateType
+//     subscribe: SubscribeType
+//     dispatch: (action: ActionsTypes) => void
+// }
+// export type StoreOfType = {
+//     store: StoreType
+// }
+type AppPropsType = {
+    initializeApp: () => void
+    initialized: boolean
 }
-export type StoreOfType = {
-    store: StoreType
-}
 
-// const App = (props: StoreOfType) => {
-const App = () => {
-    return (
-        <div className="app-wrapper">
-            <HeaderContainer />
-            <Navbar/>
-            <div className='app-wrapper-content'>
+class App extends React.Component <AppPropsType> {
+    componentDidMount() {
+        this.props.initializeApp()
+    }
 
-                <Route path='/dialogs' render={() => <DialogsContainer />}/>
-                {/*<DialogsContainer store={props.store}/>}/>*/}
-                <Route path='/profile/:userId?'
-                       render={() => <ProfileContainer />}/>
-                {/*<Route path='/profile' render={() => <ProfileContainer />}/>*/}
+    render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+        return (
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
 
-                {/*<Profile store={props.store}/>}/>*/}
-                <Route path='/users' render={() => <UsersContainer />}/>
-                <Route path='/news' render={() => <News />}/>
-                <Route path='/music' render={() => <Music />}/>
-                <Route path='/settings' render={() => <Settings />}/>
-                <Route path='/login' render={() => <LoginPage />}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer/>}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/news' render={() => <News/>}/>
+                    <Route path='/music' render={() => <Music/>}/>
+                    <Route path='/settings' render={() => <Settings/>}/>
+                    <Route path='/login' render={() => <LoginPage/>}/>
 
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
-export default App;
+
+const mapStateToProps = (state: AppStoreType) => ({
+    initialized: state.app.initialized
+})
+export default compose<ComponentType>(withRouter,
+    connect(mapStateToProps, {initializeApp}))(App);

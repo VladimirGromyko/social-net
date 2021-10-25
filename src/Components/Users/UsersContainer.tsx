@@ -145,5 +145,5 @@ let mapStateToProps = (state: RootStateType) => {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {follow, unfollow, toggleFollowingProgress, getUsers}),
-    withAuthRedirect
+    //withAuthRedirect
 )(UsersContainer)

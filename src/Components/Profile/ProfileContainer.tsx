@@ -40,24 +40,18 @@ type PropsType = RouteComponentProps<PathParamType> & ProfileContainerPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-         let userId: string|null = this.props.match.params.userId
+        let userId: string | null = this.props.match.params.userId
         //let userId = this.props.userId
 
         if (!userId) {
             // userId = "1049"
             //   userId = "17281"
             userId = this.props.authorizedUserId
+            if (!userId) {
+                this.props.history.push("/login")
+            }
         }
-
         this.props.getUserProfile(userId);
-        // usersAPI.getProfile(userId)
-        // // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-        //     .then(response => {
-        //         //this.props.toggleIsFetching(false)
-        //         this.props.setUserProfile(response.data)
-        //         //this.props.setTotalUsersCount(response.data.totalCount)
-        //
-        //     })
         this.props.getStatus(userId)
     }
 

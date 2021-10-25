@@ -1,7 +1,7 @@
 import './index.css';
 import store from "./redux/redux-store";
 import ReactDOM from "react-dom";
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
 import {Provider} from "react-redux";
@@ -10,11 +10,11 @@ import {Provider} from "react-redux";
 //let rerenderEntireTree = (state: RootStateType) => {
 // let rerenderEntireTree = () => {
     ReactDOM.render(
-        <BrowserRouter>
+        <HashRouter>
             <Provider store = {store}>
                 <App />
             </Provider>
-        </BrowserRouter>,
+        </HashRouter>,
         document.getElementById('root'));
 // }
 /*  </React.StrictMode>*/

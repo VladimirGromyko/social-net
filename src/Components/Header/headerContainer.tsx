@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from "./header";
 import {connect} from "react-redux";
-import {getAuthUsersData, logout} from "../../redux/auth-reducer";
+import {logout} from "../../redux/auth-reducer";
 import {AppStoreType} from "../../redux/redux-store";
-import {log} from "util";
+
 
 
 type MapStatePropsType = {
@@ -16,12 +16,12 @@ export type HeaderContainerPropsType = {
     logout: () => void
     isAuth: boolean,
     //setAuthUsersData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => void
-    getAuthUsersData: () => void
+    //getAuthUsersData: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-    componentDidMount() {
-        this.props.getAuthUsersData()
+    // componentDidMount() {
+    //     this.props.getAuthUsersData()
         // authAPI.me()
         // // axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
         // //     {withCredentials: true})
@@ -31,7 +31,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
         //             this.props.setAuthUsersData(id, email, login, true)
         //         }
         //     })
-    }
+    // }
 
     render() {
         return (
@@ -43,4 +43,4 @@ const mapStateToProps = (state: AppStoreType): MapStatePropsType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login
 })
-export default connect(mapStateToProps, {getAuthUsersData, logout})(HeaderContainer);
+export default connect(mapStateToProps, {logout})(HeaderContainer);

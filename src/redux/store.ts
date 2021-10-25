@@ -3,7 +3,7 @@ import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import {UsersType} from "./users-reducer";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
-import { UserDataType } from "./auth-reducer";
+import {UserDataType} from "./auth-reducer";
 import {FormAction} from "redux-form/lib/actions";
 
 
@@ -113,6 +113,9 @@ export type SetUserDataActionType = {
     type: "SET_USER_DATA",
     payload: UserDataType
 }
+export type InitializedSuccessActionType = {
+    type: "INITIALIZED_SUCCESS"
+}
 
 export type ActionsTypes = AddPostActionType |
     UpdateNewPostTextActionType |
@@ -127,7 +130,8 @@ export type ActionsTypes = AddPostActionType |
     ToggleIsFollowingInProgressType |
     SetUserProfileActionType |
     SetUserDataActionType |
-    SetStatusActionType
+    SetStatusActionType |
+    InitializedSuccessActionType
 
 
 export type StoreType = {
