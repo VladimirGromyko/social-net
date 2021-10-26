@@ -2,11 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {RootStateType} from "../../redux/store";
 import {
-    follow, getUsers,
-    // setCurrentPage,
-    // setTotalUsersCount,
-    // setUsers,
-    // toggleIsFetching,
+    follow, requestUsers,
     toggleFollowingProgress,
     unfollow
 } from "../../redux/users-reducer";
@@ -14,7 +10,15 @@ import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-//import {usersAPI} from "../../api/api";
+import {
+    getUsers,
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount
+} from "../../redux/users-selectors";
+
 
 type locationType = {
     city: string,
@@ -75,6 +79,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         //         this.props.setUsers(data.items)
         //     })
     }
+
     render() {
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
         let pages = []
@@ -91,7 +96,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
                    users={this.props.users}
                    follow={this.props.follow}
                    unfollow={this.props.unfollow}
-                   //toggleFollowingProgress={this.props.toggleFollowingProgress}
                    followingInProgress={this.props.followingInProgress}
 
             />
@@ -101,12 +105,12 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 
 let mapStateToProps = (state: RootStateType) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 // let mapDispatchToProps = (dispatch: (action: ActionsTypes) => void) => {
@@ -144,6 +148,6 @@ let mapStateToProps = (state: RootStateType) => {
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {follow, unfollow, toggleFollowingProgress, getUsers}),
+    connect(mapStateToProps, {follow, unfollow, toggleFollowingProgress, getUsers: requestUsers}),
     //withAuthRedirect
 )(UsersContainer)
