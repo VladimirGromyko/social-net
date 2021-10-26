@@ -17,7 +17,6 @@ import {AppStoreType} from "./redux/redux-store";
 import Preloader from "./Components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 
-
 type AppPropsType = {
     initializeApp: () => void
     initialized: boolean
