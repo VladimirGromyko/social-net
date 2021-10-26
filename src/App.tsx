@@ -5,7 +5,6 @@ import {Route} from 'react-router-dom';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
-import {ActionsTypes, RootStateType, SubscribeType} from "./redux/store";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
@@ -19,26 +18,14 @@ import Preloader from "./Components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 
 
-// type StoreType = {
-//     _state: RootStateType
-//     _callSubscriber: () => void
-//     getState: () => RootStateType
-//     subscribe: SubscribeType
-//     dispatch: (action: ActionsTypes) => void
-// }
-// export type StoreOfType = {
-//     store: StoreType
-// }
 type AppPropsType = {
     initializeApp: () => void
     initialized: boolean
 }
-
 class App extends React.Component <AppPropsType> {
     componentDidMount() {
         this.props.initializeApp()
     }
-
     render() {
         if (!this.props.initialized) {
             return <Preloader/>

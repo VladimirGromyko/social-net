@@ -4,11 +4,9 @@ import {AppStoreType} from "./redux-store";
 import {FormAction} from "redux-form/lib/actions";
 import {getAuthUsersData} from "./auth-reducer";
 
-
 type AppDataType = {
     initialized: boolean
 }
-
 type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsTypes | FormAction>
 
 const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS"
