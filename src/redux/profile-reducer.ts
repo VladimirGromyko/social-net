@@ -1,6 +1,6 @@
 import {ActionsTypes, ProfileType, SetStatusActionType} from "./store";
 import {Dispatch} from "redux";
-import {profileAPI, StatusType, usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 type AddPostActionType = {
     type: "ADD-POST"
