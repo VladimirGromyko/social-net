@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
@@ -40,7 +40,22 @@ const AddNewPostReduxForm = reduxForm<AddPostType>({
     form: 'ProfileAddNewPostForm'
 })(AddNewPostForm)
 
-const MyPosts: React.FC<MyPostsType> = (props) => {
+// componentDidMount() {
+//     setTimeout(() => {this.setState({a: 12})}, 1500)
+// }
+//
+// shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>): boolean {
+//     return nextProps !==this.props || nextState !== this.state
+// }
+const MyPosts = React.memo((props: MyPostsType) => {
+    // componentDidMount() {
+//     setTimeout(() => {this.setState({a: 12})}, 1500)
+// }
+//
+// shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>): boolean {
+//     return nextProps !==this.props || nextState !== this.state
+// }
+//     console.log("RENDER")
 
     let PostsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -75,5 +90,6 @@ const MyPosts: React.FC<MyPostsType> = (props) => {
             </div>
         </div>
     )
-}
+})
+
 export default MyPosts;

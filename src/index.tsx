@@ -6,10 +6,10 @@ import App from "./App";
 import React from "react";
 import {Provider} from "react-redux";
 
-    ReactDOM.render(
-        <HashRouter>
-            <Provider store = {store}>
-                <App />
-            </Provider>
-        </HashRouter> ,
-        document.getElementById('root'));
+ReactDOM.render(
+    <HashRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </HashRouter>,
+    document.getElementById('root'));
