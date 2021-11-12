@@ -6,6 +6,10 @@ type AddPostActionType = {
     type: "ADD-POST"
     newPostText: string
 }
+type DeletePostActionType = {
+    type: "DELETE_POST"
+    postId: number
+}
 type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT",
     newText: string
@@ -33,6 +37,7 @@ type DispatchType = Dispatch<ActionsTypes>
 // }
 
 const ADD_POST = "ADD-POST"
+const DELETE_POST = "DELETE_POST"
 //const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET-USER-PROFILE"
 const SET_STATUS = "SET_STATUS"
@@ -97,34 +102,35 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         }
         case SET_USER_PROFILE: {
             return {
-                ...state,
-                profile: action.profile
+                ...state, profile: action.profile
             }
         }
+        case DELETE_POST:
+            return { ...state, posts: state.posts.filter( p => p.id !== action.postId)}
         default:
             return state
 
     }
 }
 export const addPostAC = (newPostText: string): AddPostActionType => ({type: ADD_POST, newPostText})
-const setUserProfile = (profile:ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile})
-const setStatus = (status:string): SetStatusActionType => ({type: SET_STATUS, status})
+const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile})
+const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status})
+export const deletePostAC = (postId: number): DeletePostActionType => ({type: DELETE_POST, postId})
 
-
-export const getUserProfile = (userId: string) => (dispatch:DispatchType) => {
+export const getUserProfile = (userId: string) => (dispatch: DispatchType) => {
     usersAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data))
-})
+        })
 }
 
-export const getStatus = (userId: string) => (dispatch:DispatchType) => {
+export const getStatus = (userId: string) => (dispatch: DispatchType) => {
     profileAPI.getStatus(userId)
         .then(response => {
             dispatch(setStatus(response.data))
         })
 }
-export const updateStatus = (status: string) => (dispatch:DispatchType) => {
+export const updateStatus = (status: string) => (dispatch: DispatchType) => {
     profileAPI.updateStatus(status)
         .then(response => {
             if (response.data.resultCode === 0) {

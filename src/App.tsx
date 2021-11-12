@@ -21,10 +21,12 @@ type AppPropsType = {
     initializeApp: () => void
     initialized: boolean
 }
+
 class App extends React.Component <AppPropsType> {
     componentDidMount() {
         this.props.initializeApp()
     }
+
     render() {
         if (!this.props.initialized) {
             return <Preloader/>

@@ -59,6 +59,10 @@ type AddPostActionType = {
     type: "ADD-POST"
     newPostText: string
 }
+type DeletePostActionType = {
+    type: "DELETE_POST"
+    postId: number
+}
 type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT",
     newText: string
@@ -118,6 +122,7 @@ export type InitializedSuccessActionType = {
 }
 
 export type ActionsTypes = AddPostActionType |
+    DeletePostActionType |
     UpdateNewPostTextActionType |
     UpdateNewMessageBodyType |
     SendMessageType |
