@@ -114,7 +114,7 @@ export type SetStatusActionType = {
     status: string
 }
 export type SetUserDataActionType = {
-    type: "SET_USER_DATA",
+    type: "auth/SET_USER_DATA",
     payload: UserDataType
 }
 export type InitializedSuccessActionType = {

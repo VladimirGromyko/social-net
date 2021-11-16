@@ -2,6 +2,8 @@ import {ActionsTypes} from "./store";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {AxiosResponse} from "axios";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 type FollowType = {
     type: "FOLLOW",
@@ -11,7 +13,7 @@ type UnfollowType = {
     type: "UNFOLLOW",
     userId: number
 }
-
+type FollowUnfollowType = FollowType | UnfollowType
 
 type SetUsersType = {
     type: "SET_USERS",
@@ -43,7 +45,6 @@ export type UsersType = {
     followingInProgress: Array<number>
 }
 
-
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
@@ -52,8 +53,7 @@ const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS"
 
-
-let initialState = {
+let initialState : UsersType = {
     users: [
         // {
         //     id: 1, photoUrl: "https://www.vokrug.tv/pic/person/6/e/0/2/6e02e4d5202366442710552912e7a10f.jpg",
@@ -78,29 +78,31 @@ let initialState = {
     followingInProgress: []
 }
 
-const usersReducer = (state: UsersType = initialState, action: ActionsTypes) => {
+const usersReducer = (state= initialState, action: ActionsTypes):UsersType => {
 
     switch (action.type) {
         case FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                // users: state.users.map(u => {
+                //     if (u.id === action.userId) {
+                //         return {...u, followed: true}
+                //     }
+                //     return u
+                // })
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(u => {
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
+                /*users: state.users.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: false}
                     }
                     return u
-                })
+                })*/
             }
         }
         case SET_USERS: {
@@ -147,44 +149,36 @@ export const toggleFollowingProgress = (isFetchingForFollowing: boolean, userId:
 })
 type DispatchType = Dispatch<ActionsTypes>
 export const requestUsers = (page: number, pageSize: number) => {
-    return (dispatch:DispatchType) => {
+    return async (dispatch: DispatchType) => {
         dispatch(toggleIsFetching(true))
         dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize)
-            .then(data => {
-                dispatch(toggleIsFetching(false))
-                dispatch(setUsers(data.items))
-                dispatch(setTotalUsersCount(data.totalCount))
+        const data = await usersAPI.getUsers(page, pageSize)
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(data.items))
+        dispatch(setTotalUsersCount(data.totalCount))
 
-            })
     }
 }
-export const follow = (userId: number) => {
-    return (dispatch: DispatchType) => {
-        dispatch(toggleFollowingProgress(true, userId))
-        usersAPI.follow(userId)
-            .then(response => {
+const followUnfollowFlow = async (dispatch: DispatchType, userId: number,
+                                  apiMethod: (userId: number) => Promise<AxiosResponse<any>>,
+                                  actionCreator: (userId: number) => FollowUnfollowType) => {
 
-                if (response.data.resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(toggleFollowingProgress(false, userId))
-            })
+    dispatch(toggleFollowingProgress(true, userId))
+    let response = await apiMethod(userId)
+    if (response.data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleFollowingProgress(false, userId))
+}
+export const follow = (userId: number) => {
+    return async (dispatch: DispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
     }
 }
 export const unfollow = (userId: number) => {
-    return (dispatch: DispatchType) => {
-
-        dispatch(toggleFollowingProgress(true, userId))
-        usersAPI.unfollow(userId)
-            .then(response => {
-
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowSuccess(userId))
-                }
-                dispatch(toggleFollowingProgress(false, userId))
-            })
+    return async (dispatch: DispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), unfollowSuccess)
     }
 }
-
+// video 90 time 22.50
 export default usersReducer

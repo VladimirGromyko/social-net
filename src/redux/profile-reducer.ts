@@ -49,7 +49,6 @@ let initialState = {
         {id: 2, message: "Hi, what are you doing?", likesCount: 5},
         {id: 3, message: "It's my first post.", likesCount: 4},
     ],
-//    newPostText: '',
     profile: {
         "aboutMe": "",
         "contacts": {
@@ -85,15 +84,8 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                //newPostText: ""
             }
         }
-        // case UPDATE_NEW_POST_TEXT: {
-        //     return {
-        //         ...state,
-        //         newPostText: action.newText
-        //     }
-        // }
         case SET_STATUS: {
             return {
                 ...state,
@@ -117,30 +109,18 @@ const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({typ
 const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status})
 export const deletePostAC = (postId: number): DeletePostActionType => ({type: DELETE_POST, postId})
 
-export const getUserProfile = (userId: string) => (dispatch: DispatchType) => {
-    usersAPI.getProfile(userId)
-        .then(response => {
+export const getUserProfile = (userId: string) => async (dispatch: DispatchType) => {
+    const response = await usersAPI.getProfile(userId)
             dispatch(setUserProfile(response.data))
-        })
 }
-
-export const getStatus = (userId: string) => (dispatch: DispatchType) => {
-    profileAPI.getStatus(userId)
-        .then(response => {
+export const getStatus = (userId: string) => async (dispatch: DispatchType) => {
+    const response = await profileAPI.getStatus(userId)
             dispatch(setStatus(response.data))
-        })
 }
-export const updateStatus = (status: string) => (dispatch: DispatchType) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
+export const updateStatus = (status: string) => async (dispatch: DispatchType) => {
+    const response = await profileAPI.updateStatus(status)
             if (response.data.resultCode === 0) {
                 dispatch(setStatus(status))
             }
-
-        })
 }
-
-// export const updateNewPostTextAC = (text: string): UpdateNewPostTextActionType =>
-//     ({type: UPDATE_NEW_POST_TEXT, newText: text})
-
 export default profileReducer
