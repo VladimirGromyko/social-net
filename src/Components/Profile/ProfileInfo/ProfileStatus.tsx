@@ -3,7 +3,7 @@ import s from './ProfileInfo.module.css'
 
 type ProfileStatusType = {
     status: string
-    updateStatus: (status: string) => void
+    updateStatus?: (status: string) => void //  | undefined
 }
 
 class ProfileStatus extends React.Component<ProfileStatusType> {
@@ -21,7 +21,9 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         this.setState({
             editMode: false
         })
+        if (this.props.updateStatus !== undefined) {
         this.props.updateStatus(this.state.status)
+            }
     }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
@@ -30,10 +32,10 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
 
     }
 
-    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>, snapshot?: any) {
-        if(prevProps.status !== this.props.status) {
+    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>) {
+        if (prevProps.status !== this.props.status) {
             this.setState({
-                status: this.props.status
+                    status: this.props.status
                 }
             )
         }

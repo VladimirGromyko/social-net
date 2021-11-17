@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
-import {Route} from 'react-router-dom';
+import {HashRouter, Route} from 'react-router-dom';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
@@ -10,10 +10,10 @@ import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/headerContainer";
 import LoginPage from "./Components/Login/Login";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
-import {AppStoreType} from "./redux/redux-store";
+import store, {AppStoreType} from "./redux/redux-store";
 import Preloader from "./Components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 
@@ -55,5 +55,14 @@ class App extends React.Component <AppPropsType> {
 const mapStateToProps = (state: AppStoreType) => ({
     initialized: state.app.initialized
 })
-export default compose<ComponentType>(withRouter,
+let AppContainer = compose<ComponentType>(withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
+
+const SocialNetAPP = () => {
+    return (<HashRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </HashRouter>)
+}
+export default SocialNetAPP
