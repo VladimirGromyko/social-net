@@ -2,7 +2,7 @@ import {ActionsTypes, SetUserDataActionType} from "./store";
 import {authAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
-import {AppStoreType} from "./redux-store";
+import {AppStoreType, ThunkType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 import {FormAction} from "redux-form/lib/actions";
 
@@ -15,7 +15,8 @@ export type UserDataType = {
     //isFetching: boolean
 }
 
-type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsTypes | FormAction>
+
+
 
 const SET_USER_DATA = "auth/SET_USER_DATA"
 

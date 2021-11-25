@@ -17,28 +17,31 @@ type MessagesType = {
     message: string
 }
 
-export type ProfileType = {
-    "aboutMe": string,
-    "contacts": {
-        "facebook": string,
-        "website": null,
-        "vk": string,
-        "twitter": string,
-        "instagram": string,
-        "youtube": null,
-        "github": string,
-        "mainLink": null
-    },
-    "lookingForAJob": boolean,
-    "lookingForAJobDescription": string,
-    "fullName": string,
-    "userId": string,
-    "photos": {
-        "small": string,
-        "large": string
-    }
+export type ContactsType = {
+    "facebook": string | null,
+    "website": string | null,
+    "vk": string | null,
+    "twitter": string | null,
+    "instagram": string | null,
+    "youtube": string | null,
+    "github": string | null,
+    "mainLink": string | null
 }
 
+export type PhotosType = {
+    small: string | null,
+    large: string | null
+}
+
+export type ProfileType = {
+    aboutMe: string,
+    contacts: ContactsType,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: string,
+    photos: PhotosType
+}
 
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
@@ -265,7 +268,7 @@ let store: StoreType = {
     },
 
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        //this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
         this._callSubscriber()

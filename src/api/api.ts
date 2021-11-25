@@ -1,5 +1,6 @@
 import axios from "axios";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
+import {PhotosType, ProfileType} from "../redux/store";
 
 type getUsersResponseType = {
     items: Array<UsersObjectType>,
@@ -9,7 +10,6 @@ type getUsersResponseType = {
 export type StatusType = {
     status: string
 }
-
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -52,6 +52,9 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    saveProfile(profile:ProfileType) {
+        return instance.put(`profile`, profile)
     }
 
 }
