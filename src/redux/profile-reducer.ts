@@ -23,6 +23,11 @@ type postsType = {
     message: string,
     likesCount: number
 }
+type SavePhotoActionType = {
+    type: "SAVE_PHOTO_SUCCESS"
+    photos: File
+}
+
 export type ProfilePageType = {
     posts: Array<postsType>
 //    newPostText: string
@@ -41,6 +46,7 @@ const DELETE_POST = "DELETE_POST"
 //const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET-USER-PROFILE"
 const SET_STATUS = "SET_STATUS"
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS"
 
 
 let initialState = {
@@ -99,6 +105,10 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         }
         case DELETE_POST:
             return { ...state, posts: state.posts.filter( p => p.id !== action.postId)}
+
+        case SAVE_PHOTO_SUCCESS:
+            return { ...state, profile: {...state.profile, photos: action.photos}}
+
         default:
             return state
 
@@ -108,6 +118,7 @@ export const addPostAC = (newPostText: string): AddPostActionType => ({type: ADD
 const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile})
 const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status})
 export const deletePostAC = (postId: number): DeletePostActionType => ({type: DELETE_POST, postId})
+export const savePhotoSuccess = (photos: File): SavePhotoActionType => ({type: SAVE_PHOTO_SUCCESS, photos})
 
 export const getUserProfile = (userId: string) => async (dispatch: DispatchType) => {
     const response = await usersAPI.getProfile(userId)
@@ -122,5 +133,11 @@ export const updateStatus = (status: string) => async (dispatch: DispatchType) =
             if (response.data.resultCode === 0) {
                 dispatch(setStatus(status))
             }
+}
+export const savePhoto = (file: File) => async (dispatch: DispatchType) => {
+    const response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
+    }
 }
 export default profileReducer

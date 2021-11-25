@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {ActionsTypes, ProfileType, RootStateType, SubscribeType} from "../../redux/store";
@@ -17,18 +17,23 @@ type StoreOfType = {
     store: StoreType
 }
 type ProfilePropsType = {
+    isOwner: boolean
     profile: ProfileType
     status: string
     updateStatus: (status: string) => void
+    savePhoto: ( file: File) => void
 }
 
-/*const Profile = (props: StoreOfType) => {*/
 const Profile = (props: ProfilePropsType) => {
 
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
-            {/*    <MyPostsContainer store={props.store}/>*/}
+            <ProfileInfo isOwner={props.isOwner}
+                         profile={props.profile}
+                         status={props.status}
+                         updateStatus={props.updateStatus}
+                         savePhoto={props.savePhoto}
+            />
             <MyPostsContainer/>
         </div>
     )

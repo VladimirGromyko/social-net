@@ -1,8 +1,11 @@
 
 .content img {
     padding: 1px;
-    width: 1488px;
+    width: 1200px;
 }
 .discriptionBlock {
     padding: 10px;
+}
+.mainPhoto {
+    max-width: 200px;
 }

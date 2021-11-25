@@ -120,6 +120,10 @@ export type SetUserDataActionType = {
 export type InitializedSuccessActionType = {
     type: "INITIALIZED_SUCCESS"
 }
+type SavePhotoActionType = {
+    type: "SAVE_PHOTO_SUCCESS"
+    photos: File
+}
 
 export type ActionsTypes = AddPostActionType |
     DeletePostActionType |
@@ -136,7 +140,8 @@ export type ActionsTypes = AddPostActionType |
     SetUserProfileActionType |
     SetUserDataActionType |
     SetStatusActionType |
-    InitializedSuccessActionType
+    InitializedSuccessActionType |
+    SavePhotoActionType
 
 
 export type StoreType = {
