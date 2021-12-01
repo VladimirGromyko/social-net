@@ -5,6 +5,7 @@ import {UsersType} from "./users-reducer";
 import {UsersObjectType} from "../Components/Users/UsersContainer";
 import {UserDataType} from "./auth-reducer";
 import {FormAction} from "redux-form/lib/actions";
+import {CaptchaType} from "../Components/Login/Login";
 
 
 type DialogsType = {
@@ -120,6 +121,12 @@ export type SetUserDataActionType = {
     type: "auth/SET_USER_DATA",
     payload: UserDataType
 }
+
+export type GetCaptchaUrlActionType = {
+    type: "auth/GET_CAPTCHA_URL_SUCCESS",
+    payload: CaptchaType
+}
+
 export type InitializedSuccessActionType = {
     type: "INITIALIZED_SUCCESS"
 }
@@ -142,6 +149,7 @@ export type ActionsTypes = AddPostActionType |
     ToggleIsFollowingInProgressType |
     SetUserProfileActionType |
     SetUserDataActionType |
+    GetCaptchaUrlActionType |
     SetStatusActionType |
     InitializedSuccessActionType |
     SavePhotoActionType
