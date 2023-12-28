@@ -1,4 +1,4 @@
-# Link[https://vladimirgromyko.github.io/social-net/]
+# [Link](https://vladimirgromyko.github.io/social-net/)
 
 # Getting Started with Create React App
 
